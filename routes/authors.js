@@ -3,8 +3,13 @@ const router = express.Router();
 const AuthorModel = require('../models/author');
 
 // All authors 
-router.get('/', (req, res) => {
-	res.render('authors/index');
+router.get('/', async (req, res) => {
+	try {
+		const authors = await AuthorModel.find({});
+		res.render('authors/index', { authors: authors });
+	} catch {
+		res.render('/', { errorMessage: err });
+	}
 })
 
 // New author
