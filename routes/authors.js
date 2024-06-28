@@ -13,23 +13,24 @@ router.get('/new', (req, res) => {
 })
 
 // Create author
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
 	const author = new AuthorModel({
 		name: req.body.name
 	});
 
-	author.save()
-		.then((newAuthor) => {
-			// res.render(`authors/${newAuthors.id}`);
-			res.render(`authors`);
-		})
-		.catch((err) => {
-			res.render('authors/new', {
-				author: author,
-				errorMessage: 'Error creating Author'
+	try {
+		await author.save()
+			.then((newAuthor) => {
+				// res.render(`authors/${newAuthors.id}`);
+				res.render(`authors`);
 			})
-			console.error(err);
-		});
+	} catch(err) {
+		res.render('authors/new', {
+			author: author,
+			errorMessage: 'Error creating Author'
+		})
+		console.error(err);
+	}
 })
 
 module.exports = router;

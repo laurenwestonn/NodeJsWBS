@@ -1,1 +1,5 @@
-<%= locals.errorMessage %>
+<% if (!!locals.errorMessage) { %>
+
+	<p style="color:red;"><strong><%= errorMessage %></strong></p>
+
+<% } %>
