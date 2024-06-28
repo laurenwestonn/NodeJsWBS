@@ -14,7 +14,22 @@ router.get('/new', (req, res) => {
 
 // Create author
 router.post('/', (req, res) => {
-	res.send(req.body.name);
+	const author = new AuthorModel({
+		name: req.body.name
+	});
+
+	author.save()
+		.then((newAuthor) => {
+			// res.render(`authors/${newAuthors.id}`);
+			res.render(`authors`);
+		})
+		.catch((err) => {
+			res.render('authors/new', {
+				author: author,
+				errorMessage: 'Error creating Author'
+			})
+			console.error(err);
+		});
 })
 
 module.exports = router;
