@@ -17,7 +17,21 @@ const upload = multer({
 
 // All books 
 router.get('/', async (req, res) => {
-	res.send('All books');
+	try {
+		const searchOptions = {};
+		if (req.query.title) {
+			searchOptions.title = new RegExp(req.query.title, 'i');
+		}
+
+		const books = await BookModel.find(searchOptions);
+		console.log(books)
+		res.render('books/index', {
+			books: books,
+			searchOptions: req.query
+		});
+	} catch {
+		res.redirect('/books');
+	}
 })
 
 // New book
