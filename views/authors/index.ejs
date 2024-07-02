@@ -3,13 +3,13 @@
 <form action="/authors" method=""GET>
 
 	<label>Name</label>
-	<input type="text" name="name" value="<%= searchOptions.name %>"/>
+	<input type="text" name="name" value="<%= locals.searchOptions ? locals.searchOptions.name : '' %>"/>
 	<button>Search</button>
 
 </form>
 
 <br>
-	
+
 <% authors.forEach(author => { %>
 	<p><%= author.name %></p>
 <% }); %>	
